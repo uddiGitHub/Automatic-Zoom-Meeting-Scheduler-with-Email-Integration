@@ -2,3 +2,4 @@ References
 1. https://www.geeksforgeeks.org/gmail-login-using-python-selenium/
 2. https://github.com/frkngny/EmailViaPython
 3. https://github.com/thepycoach/automation
+4. https://www.youtube.com/playlist?list=PLL34mf651faPOf5PE5YjYgTRITzVzzvMz

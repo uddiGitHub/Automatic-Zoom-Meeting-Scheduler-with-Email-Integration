@@ -1,0 +1,4 @@
+Chrome webdrive is required to be download based on the Version of the chrome, Since in im using chrome Version 114.0.5735.199 (Official Build) (64-bit).
+Downloaded the webdrive from https://chromedriver.chromium.org/downloads
+
+Extract the downloaded file and save it to c:\browserdriver\chromedriver.exe 
