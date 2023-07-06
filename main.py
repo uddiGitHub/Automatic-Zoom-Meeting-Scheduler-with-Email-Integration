@@ -13,9 +13,6 @@ def login(emailId,password,url):
     #navigate to gmail login page
     driver.get(url)
 
-#     # Wait for the login process to complete
-#     driver.implicitly_wait(100) 
-
     #type the email and password using pyautogui
     gui.typewrite(emailId)
     gui.press('enter')
@@ -24,11 +21,11 @@ def login(emailId,password,url):
 
     gui.typewrite(password)
     gui.press('enter')
-    
+
+    # Wait for the login process to complete
     driver.implicitly_wait(10)
     return driver
 
 driver = login(emailId,password,gmail_url)
 
-# driver.implicitly_wait(100)
 # driver.quit() 
