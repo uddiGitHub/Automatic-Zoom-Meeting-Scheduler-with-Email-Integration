@@ -1,8 +1,8 @@
 import subprocess
 
-# pyautogui require for keyboad and mouse inputs
-# webdriver-manager require to install the web drivers based on the version your web-browser
-# selenium library that's use for automate task
+# PyAutoGUI is required for keyboard and mouse inputs.
+# WebDriver Manager is required to install the web drivers based on the version of your web browser.
+# The Selenium library is used for automating tasks.
 
 packages = ['pyautogui','selenium','webdriver-manager']
 
