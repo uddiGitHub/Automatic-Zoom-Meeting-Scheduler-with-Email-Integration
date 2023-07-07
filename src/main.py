@@ -23,15 +23,20 @@ def login(emailId, password, url):
     gui.typewrite(password)
     gui.press('enter')
 
-    time.sleep(10)
-
-    # Wait for the login process to complete
+    #Wait for the login process to complete
     driver.implicitly_wait(10)
 
+    emails = read_inbox(driver)
+
+    driver.close()
+    return emails
+def read_inbox(driver):
+    emails = "unread mails"
+    return emails
 
 def automate():
     # login to the gmail account
-    login(emailId, password, gmail_url)
+    emails = login(emailId, password, gmail_url)
+    return emails
+emails = automate()
 
-
-automate()
