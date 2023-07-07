@@ -1,42 +1,21 @@
+from selenium import webdriver
+
 # import the credentials
 from credentials import emailId, password, gmail_url
 
-# import PyAutoGui and Selenium for automating the process
-import pyautogui as gui
-from selenium import webdriver
-import time
+# import the login class to log into the gmail
+from login import login
 
+# define the Xpath of the required elements of the web page
+emailXpath = "//input[@id='identifierId']"
+passXpath = "//input[@name='password']"
 
-def login(emailId, password, url):
-    # create a new instance
-    driver = webdriver.Chrome()
+# create a instance of gmail login
+gmail_login = login(emailId,password,gmail_url,emailXpath,passXpath)
 
-    # navigate to gmail login page
-    driver.get(url)
+# call the loginMethod from login class
+driver = gmail_login.loginMethod()
 
-    # type the email and password using pyautogui
-    gui.typewrite(emailId)
-    gui.press('enter')
-
-    gui.sleep(5)  # sleep for 3sec to complete the above process
-
-    gui.typewrite(password)
-    gui.press('enter')
-
-    #Wait for the login process to complete
-    driver.implicitly_wait(10)
-
-    emails = read_inbox(driver)
-
-    driver.close()
-    return emails
-def read_inbox(driver):
-    emails = "unread mails"
-    return emails
-
-def automate():
-    # login to the gmail account
-    emails = login(emailId, password, gmail_url)
-    return emails
-emails = automate()
+# close the driver
+driver.close()
 
