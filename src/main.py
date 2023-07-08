@@ -20,9 +20,9 @@ driver = gmail_login.loginMethod()
 # now read the unread mails
 readInstatnce = read(driver)
 
-unread_mails_df = readInstatnce.read_text()
+mails_df = readInstatnce.read_text()
 
-print(unread_mails_df)
+print(mails_df)
 
 # close the driver
 driver.close()
