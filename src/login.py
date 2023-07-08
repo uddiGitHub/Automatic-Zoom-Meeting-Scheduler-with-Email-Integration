@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import pyautogui as gui
 
 import time
 
@@ -23,9 +24,15 @@ class login:
         # input the credentials 
         email = driver.find_element(By.XPATH,self.emailXpath)
         email.send_keys(self.emailId)
+        gui.press('enter')
 
-        Password = driver.find_element(By.XPATH,self.passXpath)
-        Password.send_keys(self.password)
+        # time.sleep(100)
+
+        # Password = driver.find_element(By.XPATH,self.passXpath)
+        # Password.send_keys(self.password)
+        gui.sleep(5)
+        gui.typewrite(self.password)
+        gui.press('enter')
         
         time.sleep(4)
         return driver
