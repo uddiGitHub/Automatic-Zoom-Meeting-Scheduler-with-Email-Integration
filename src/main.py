@@ -9,7 +9,7 @@ from readMail import read
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
-passXpath = "//input[@id='password']"
+passXpath = "//div[@id='password']"
 
 # create a instance of gmail login
 gmail_login = login(emailId,password,gmail_url,emailXpath,passXpath)

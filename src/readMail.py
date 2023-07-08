@@ -20,7 +20,8 @@ class read:
         mail_df = []
 
         for email in mails:
-           subject = email.text
+        #    print(email.text)
+        #    subject = email.text
                
            #open the unread mail    
            email.click()
@@ -31,7 +32,8 @@ class read:
            bodyElement = self.driver.find_element(By.XPATH,"//div[@class='gs']")
            body = bodyElement.text
 
-           mail_df.append({'Subject':subject,
+           mail_df.append({
+            #    'Subject':subject,
                            'Sender': sender,
                            'Body': body})
            

@@ -28,7 +28,7 @@ class login:
 
         # time.sleep(100)
 
-        # Password = driver.find_element(By.XPATH,self.passXpath)
+        # Password = driver.find_element(By.NAME,"Passwd")
         # Password.send_keys(self.password)
         gui.sleep(5)
         gui.typewrite(self.password)
