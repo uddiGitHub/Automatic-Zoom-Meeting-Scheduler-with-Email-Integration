@@ -14,8 +14,8 @@ class read:
         primary_mailbox.click()
 
         # find all the emails
-        mails = self.driver.find_elements(By.CLASS_NAME,mailsClassName)
-        # mails = self.driver.find_elements(By.CLASS_NAME,"zA zE")
+        # mails = self.driver.find_elements(By.CLASS_NAME,mailsClassName)
+        mails = self.driver.find_elements(By.CLASS_NAME,"zA zE")
 
         # create a empty list list to store all the mails
         mail_df = []
@@ -25,8 +25,8 @@ class read:
         #    subject = email.text
                
            #open the unread mail    
-           email = self.driver.find_elements(By.CLASS_NAME,"zA zE")
-        #    email.click
+        #    email = self.driver.find_elements(By.CLASS_NAME,"zA zE")
+           email.click
            print(len(email))
 
            senderElement = self.driver.find_element(By.XPATH,"//span[@class='gD']")
