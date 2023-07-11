@@ -2,37 +2,37 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-import pyautogui as gui
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-import time
 
 class login:
-    def __init__(self, emailId, password, url,emailXpath,passXpath):
+    def __init__(self, emailId, password, url,emailXpath,passName,enterXpath):
         self.emailId = emailId
         self.password = password
         self.url = url
         self.emailXpath = emailXpath
-        self.passXpath = passXpath
+        self.passName = passName
+        self.enterXpath = enterXpath
     
     def loginMethod(self):
-        # create a new instance
+        # create a new instance of chrome
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-        # go to gmail web page
+        # go to gmail web page 
         driver.get(self.url)
 
-        # input the credentials 
-        email = driver.find_element(By.XPATH,self.emailXpath)
+        # input the credentials and login
+        email = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, self.emailXpath))
+        )
         email.send_keys(self.emailId)
-        gui.press('enter')
+        driver.find_element(By.XPATH, self.enterXpath).click()
 
-        # time.sleep(100)
+        password = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.NAME  , self.passName))
+        )
+        password.send_keys(self.password)
+        driver.find_element(By.XPATH, self.enterXpath).click()
 
-        # Password = driver.find_element(By.NAME,"Passwd")
-        # Password.send_keys(self.password)
-        gui.sleep(5)
-        gui.typewrite(self.password)
-        gui.press('enter')
-        
-        time.sleep(4)
         return driver
