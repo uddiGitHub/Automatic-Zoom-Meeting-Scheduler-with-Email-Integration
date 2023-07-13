@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
 
 class read:
     def __init__(self,driver):
@@ -19,8 +20,8 @@ class read:
         # find all the emails
         unread_mails = self.driver.find_elements(By.CLASS_NAME,unread_mailsClassName)
 
-        # create a empty list list to store all the mails
-        unread_mail_df = []
+        # create a empty dataframe to store the unread mails
+        unread_mail_df = pd.DataFrame(columns=['Subject','Sender','Body'])
 
         if unread_mails != []:
             for email in unread_mails:
@@ -38,7 +39,8 @@ class read:
                 bodyElement = self.driver.find_element(By.CLASS_NAME, "ii.gt")
                 body = bodyElement.text
 
-                unread_mail_df.append({'Subject':subject,'Sender': sender,'Body': body})
+                mail_data = {'Subject':subject,'Sender': sender,'Body': body}
+                unread_mail_df = pd.concat([unread_mail_df,pd.DataFrame(mail_data,index=[0])],ignore_index=True)
 
                 self.driver.back()
 
