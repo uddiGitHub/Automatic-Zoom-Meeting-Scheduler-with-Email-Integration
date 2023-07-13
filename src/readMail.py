@@ -21,7 +21,7 @@ class read:
         unread_mails = self.driver.find_elements(By.CLASS_NAME,unread_mailsClassName)
 
         # create a empty dataframe to store the unread mails
-        unread_mail_df = pd.DataFrame(columns=['Subject','Sender','Body'])
+        unread_mail_df = pd.DataFrame(columns=['Subject','Sender','Sender ID','Body'])
 
         if unread_mails != []:
             for email in unread_mails:
@@ -32,14 +32,17 @@ class read:
                     EC.visibility_of_element_located((By.CLASS_NAME, "hP"))
                 )
                 subject = subject.text
-
+                
                 senderElement = self.driver.find_element(By.CLASS_NAME, "gD")
                 sender = senderElement.text
                 
+                senderId = self.driver.find_element(By.CLASS_NAME, "go")
+                senderId = senderId.text
+
                 bodyElement = self.driver.find_element(By.CLASS_NAME, "ii.gt")
                 body = bodyElement.text
 
-                mail_data = {'Subject':subject,'Sender': sender,'Body': body}
+                mail_data = {'Subject':subject,'Sender': sender,'Sender ID': senderId,'Body': body}
                 unread_mail_df = pd.concat([unread_mail_df,pd.DataFrame(mail_data,index=[0])],ignore_index=True)
 
                 self.driver.back()

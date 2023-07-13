@@ -1,5 +1,5 @@
-Subject,Sender,Body
-Reminder: Your Google Cloud free trial is waiting,Google Cloud,"Go to your Console
+Subject,Sender,Sender ID,Body
+Reminder: Your Google Cloud free trial is waiting,Google Cloud,<CloudPlatform-noreply@google.com>,"Go to your Console
 You’re almost there.
 Finish your Google Cloud registration and get $300 in free credit. No autocharges.
 Get started for free
@@ -16,7 +16,7 @@ Forums
 Google LLC 1600 Amphitheatre Parkway, Mountain View, CA 94043
 This email was sent to iocl.internship23@gmail.com because you indicated that you’d like to receive updates and tips about your Google Cloud account. If you don’t want to receive such emails in the future, please unsubscribe. You can also change your preferences on your account’s profile page by logging in at console.cloud.google.com
                "
-Request for Zoom Meeting: Team Training,Uddipta Deka,"Dear IOCL,
+Request for Zoom Meeting: Team Training,Uddipta Deka,<uddipta222000deka@gmail.com>,"Dear IOCL,
 
 I hope this email finds you in good health. I am writing to request a Zoom meeting to conduct a team training session on volleyball. As our team continues to grow, it is crucial that we enhance our skills and knowledge in this area to ensure consistent performance and productivity.
 
@@ -31,7 +31,7 @@ Please let me know if the proposed date and time are convenient for you. If not,
 Thank you for your attention to this matter. I look forward to your positive response.
 
 Warm regards,"
-Request for Zoom Meeting: Project Discussion,Uddipta Deka,"Dear IOCL,
+Request for Zoom Meeting: Project Discussion,Uddipta Deka,<uddipta222000deka@gmail.com>,"Dear IOCL,
 
 I hope this email finds you well. I would like to request a Zoom meeting to discuss an important project that requires your input and guidance. The meeting will provide an opportunity to go over the project details, address any concerns, and ensure that we are aligned on the next steps.
 
@@ -46,4 +46,4 @@ Please let me know if the suggested date and time work for you, or if you have a
 Thank you for considering my request. I appreciate your time and cooperation.
 
 Best regards,"
-TestMail,Uddipta Deka,This mail is sent only for testing purposes.
+TestMail,Uddipta Deka,<uddipta222000deka@gmail.com>,This mail is sent only for testing purposes.
