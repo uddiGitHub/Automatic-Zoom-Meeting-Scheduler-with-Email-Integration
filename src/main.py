@@ -1,4 +1,5 @@
 from selenium import webdriver
+import pandas
 
 # import the credentials
 from credentials import emailId, password, gmail_url
@@ -22,6 +23,7 @@ driver = gmail_login.loginMethod()
 readInstatnce = read(driver)
 
 unread_mails_df = readInstatnce.read_text()
+unread_mails_df.to_csv("mails.csv", index=False)
 
 print(unread_mails_df)
 
