@@ -5,9 +5,9 @@ import pandas
 from credentials import emailId, password, gmail_url
 
 # import 
-from login import login
-from readMail import read
-from mailAnalyzer import analyze
+from login_manager import login
+from mail_Reader import read
+from mail_Analyzer import analyze
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
