@@ -22,18 +22,16 @@ driver = gmail_login.loginMethod()
 readInstatnce = read(driver)
 
 unread_mails_df = readInstatnce.read_text()
-unread_mails_df.to_csv("mails.csv", index=False)
-
-print(unread_mails_df)
-
-
-# now analyze the mails
-analyzeInstance = analyze(unread_mails_df)
-qualified_mails = analyzeInstance.qualify_the_mail()
-date_and_time = analyzeInstance.extract_date_and_time(qualified_mails)
-
-
-print(qualified_mails)
+# unread_mails_df.to_csv("mails.csv", index=False)
+if unread_mails_df is None:
+    print("No unread mails")
+else:
+    #analyze the mails
+    analyzeInstance = analyze(unread_mails_df)
+    qualified_mails = analyzeInstance.qualify_the_mail()
+    linkReqMails = analyzeInstance.extract_date_and_time(qualified_mails)
+    print(linkReqMails)
+    linkReqMails.to_csv("linkReqMails.csv", index=False)
 
 # close the driver
 driver.close()

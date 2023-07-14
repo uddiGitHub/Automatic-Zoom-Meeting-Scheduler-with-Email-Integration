@@ -49,7 +49,6 @@ class read:
 
             return unread_mail_df 
         else:
-            empty = "No unread mails"
-            return empty
+            return None
 
         

@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 
 class login:
     def __init__(self, emailId, password, url,emailXpath,passName,enterXpath):
@@ -28,6 +28,8 @@ class login:
         )
         email.send_keys(self.emailId)
         driver.find_element(By.XPATH, self.enterXpath).click()
+
+        time.sleep(2)
 
         password = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.NAME  , self.passName))
