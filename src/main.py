@@ -7,6 +7,7 @@ from credentials import emailId, password, gmail_url
 # import 
 from login import login
 from readMail import read
+from mailAnalyzer import analyze
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
@@ -15,8 +16,6 @@ enterXpath = "//span[normalize-space()='Next']"
 
 # create a instance of gmail login
 gmail_login = login(emailId,password,gmail_url,emailXpath,passName,enterXpath)
-
-# call the loginMethod from login class
 driver = gmail_login.loginMethod()
 
 # now read the unread mails
@@ -26,6 +25,15 @@ unread_mails_df = readInstatnce.read_text()
 unread_mails_df.to_csv("mails.csv", index=False)
 
 print(unread_mails_df)
+
+
+# now analyze the mails
+analyzeInstance = analyze(unread_mails_df)
+qualified_mails = analyzeInstance.qualify_the_mail()
+date_and_time = analyzeInstance.extract_date_and_time(qualified_mails)
+
+
+print(qualified_mails)
 
 # close the driver
 driver.close()
