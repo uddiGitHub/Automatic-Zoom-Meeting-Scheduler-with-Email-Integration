@@ -28,15 +28,14 @@ class login:
             EC.visibility_of_element_located((By.XPATH, self.emailXpath))
         )
         email.send_keys(self.emailId)
-        
 
         try:
+            # try to find the password field
             driver.find_element(By.XPATH, self.passName)
+            # if the password field is found, control goes out of the try and except block
         except NoSuchElementException:
+            # if the password field is not found, click on the next button
             driver.find_element(By.XPATH, self.enterXpath).click()
-
-
-        
 
         password = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.NAME  , self.passName))

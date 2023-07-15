@@ -47,13 +47,14 @@ else:
 
     # define the xpath
     usernameXpath = "//input[@id='email']"
-    passwordXpath = "//input[@id='password']"
+    passwordName = "password"
     singinXpath = "//span[normalize-space()='Sign In']"
 
     # login to zoom
-    zoom_login = login(emailId,zoom_password,zoom_url,usernameXpath,passwordXpath,singinXpath)
+    zoom_login = login(emailId,zoom_password,zoom_url,usernameXpath,passwordName,singinXpath)
     zoomDriver = zoom_login.loginMethod()
 
+    print("Login to zoom successful")
     # close the zoom driver
     zoomDriver.close()
 
