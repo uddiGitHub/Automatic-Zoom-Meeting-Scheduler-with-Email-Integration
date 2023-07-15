@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 class login:
@@ -27,14 +28,21 @@ class login:
             EC.visibility_of_element_located((By.XPATH, self.emailXpath))
         )
         email.send_keys(self.emailId)
-        driver.find_element(By.XPATH, self.enterXpath).click()
+        
 
-        time.sleep(2)
+        try:
+            driver.find_element(By.XPATH, self.passName)
+        except NoSuchElementException:
+            driver.find_element(By.XPATH, self.enterXpath).click()
+
+
+        
 
         password = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.NAME  , self.passName))
         )
         password.send_keys(self.password)
+        time.sleep(2)
         driver.find_element(By.XPATH, self.enterXpath).click()
 
         return driver

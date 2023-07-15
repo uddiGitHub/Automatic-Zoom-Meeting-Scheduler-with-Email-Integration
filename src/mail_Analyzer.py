@@ -27,6 +27,8 @@ class analyze:
 
             # find the date from the body
             date = parser.parse(body, fuzzy=True).date()
+            # date = parser.parse(body, fuzzy_with_tokens=True, dayfirst=True).date()
+
 
             # find the time and Duration of the meeting from the body
             matchTime = re.search(r'Time: (\d{1,2}:\d{2} [AP]M)', body)
