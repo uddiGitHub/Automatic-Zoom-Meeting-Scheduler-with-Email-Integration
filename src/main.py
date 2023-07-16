@@ -1,5 +1,4 @@
 from selenium import webdriver
-import pandas
 
 # import the credentials
 from credentials import emailId, gmail_password, zoom_password
@@ -7,7 +6,8 @@ from credentials import emailId, gmail_password, zoom_password
 # import 
 from login_manager import login
 from mail_Reader import read
-from mail_Analyzer import analyze
+# from mail_Analyzer import analyze
+from bardMail_analyzer import bardAnalyzer
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
@@ -32,11 +32,18 @@ if unread_mails_df is None:
     # close the driver
     mailDriver.close()
 else:
-    #analyze the mails
-    analyzeInstance = analyze(unread_mails_df)
-    qualified_mails = analyzeInstance.qualify_the_mail()
-    linkReqMails = analyzeInstance.extract_date_and_time(qualified_mails)
-    # print(linkReqMails)
+    # #analyze the mails using keyword search
+    # analyzeInstance = analyze(unread_mails_df)
+    # qualified_mails = analyzeInstance.qualify_the_mail()
+    # linkReqMails = analyzeInstance.extract_date_and_time(qualified_mails)
+    # # print(linkReqMails)
+    # linkReqMails.to_csv("linkReqMails.csv", index=False)
+
+    # analyze the mails with Bard API
+    bardInstance = bardAnalyzer(unread_mails_df)
+    qualified_mails = bardInstance.analyze_the_mail()
+    linkReqMails = bardInstance.extract_date_and_time(qualified_mails)
+    print(linkReqMails)
     linkReqMails.to_csv("linkReqMails.csv", index=False)
 
     # close the driver

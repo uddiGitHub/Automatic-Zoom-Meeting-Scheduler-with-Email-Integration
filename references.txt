@@ -5,3 +5,5 @@ References
 4. https://www.youtube.com/playlist?list=PLL34mf651faPOf5PE5YjYgTRITzVzzvMz
 5. https://youtu.be/HBOdscUwUnc
 6. https://selenium-python.readthedocs.io/
+
+7. https://blog.enterprisedna.co/chatgpt-api/
