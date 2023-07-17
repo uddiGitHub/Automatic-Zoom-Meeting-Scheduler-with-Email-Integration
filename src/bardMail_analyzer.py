@@ -1,14 +1,10 @@
 import os
 import re
-import spacy
 import pandas as pd
 from credentials import bard_api_key
 from bardapi import Bard
 from dateutil import parser
 from datetime import datetime, timedelta
-
-# load the spacy model
-nlp = spacy.load("en_core_web_sm")
 
 # set the API key
 os.environ["_BARD_API_KEY"] = bard_api_key
@@ -17,7 +13,7 @@ class bardAnalyzer:
     def __init__(self, unread_mail_df):
         self.unread_mail_df = unread_mail_df
 
-    # use chatGPT API to analyze the mail
+    # use Bard API to analyze the mail
     def analyze_the_mail(self):
         # list
         qualifiedResponse_list = []
@@ -26,12 +22,12 @@ class bardAnalyzer:
             body = self.unread_mail_df['Body'].iloc[index]
 
             # set the prompt
-            prompt = 'Response should be one token only, no other explanation: just "Yes" or "No": Is this mail a meeting request?\n' + body + "\nDon't add any other information in the response.(Yes/No)\n)"
+            prompt = 'Response should be one token only,that is just "Yes" or "No": Is this mail a zoom meeting request?\nMail: '+body + "Other instructions for you->\nDon't add any other information in the response.(Yes/No)\n\nGive the responese inside curly braces)"
 
             # call the API
             bard = Bard()
             qualifyResponse = bard.get_answer(prompt)['content']
-            qualifyResponse_token = nlp(qualifyResponse)[0].text
+            qualifyResponse_token = re.search(r'{(.*?)}', qualifyResponse).group(1)
 
             # append the response to the list
             qualifiedResponse_list.append(qualifyResponse_token)
@@ -49,7 +45,8 @@ class bardAnalyzer:
         # empty list to store the date time and Duration
         date_list = []
         time_list = []
-        duration_list = []
+        duration_hour_list = []
+        duration_minute_list = []
 
         for index in range(len(qualified_mails)):
             # get the body of the mail
@@ -57,8 +54,6 @@ class bardAnalyzer:
 
             # find the date from the body
             date = parser.parse(body, fuzzy=True).date()
-            # date = parser.parse(body, fuzzy_with_tokens=True, dayfirst=True).date()
-
 
             # find the time and Duration of the meeting from the body
             matchTime = re.search(r'Time: (\d{1,2}:\d{2} [AP]M)', body)
@@ -78,20 +73,44 @@ class bardAnalyzer:
                 time = None
                 duration = None
 
-            # convert the date and time to datetime format
-            # date_and_time = datetime.strptime(str(date) + " " + time, '%Y-%m-%d %I:%M %p')
-
+            # convert the duration to appropriate format
+            hours = duration.seconds // 3600
+            minutes = (duration.seconds // 60) % 60
 
             # append the date time and duration to the list
-            # date_and_time_list.append(date_and_time)
             date_list.append(date)
             time_list.append(time)
-            duration_list.append(duration)
+            duration_hour_list.append(hours)
+            duration_minute_list.append(minutes)
 
         # add the date and time and duration to the dataframe
         linkReqMails = qualified_mails.drop('Body',axis=1)
         linkReqMails['Date'] = pd.Series(date_list).tolist()
         linkReqMails['Time'] = pd.Series(time_list).tolist()
-        linkReqMails['Duration'] = pd.Series(duration_list).tolist()
+        linkReqMails['Duration_Hours'] = pd.Series(duration_hour_list).tolist()
+        linkReqMails['Duration_Minutes'] = pd.Series(duration_minute_list).tolist()
 
         return linkReqMails
+    
+    def extract_mail_data(self,mail):
+        # call the API
+        bard = Bard()
+
+        # empty list
+        topic_list = []
+
+        for index in range(len(mail)):
+            # topic of the meeting 
+            subject = mail['Subject'].iloc[index]
+            topic_prompt = 'Response should be one sentence only, no other explanation: just the topic of the meeting.\n' + subject + "\nDon't add any other information in the response.\nGive the responese inside curly braces)"
+            topic = bard.get_answer(topic_prompt)['content']
+            topic = re.search(r'{(.*?)}', topic).group(1)
+
+            # append the topic to the list
+            topic_list.append(topic)
+
+        # add the topic to the dataframe
+        mail['Topic'] = pd.Series(topic_list).tolist()
+
+        return mail
+
