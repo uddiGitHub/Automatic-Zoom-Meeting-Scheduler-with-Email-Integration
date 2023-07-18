@@ -4,7 +4,7 @@ import pandas as pd
 from credentials import bard_api_key
 from bardapi import Bard
 from dateutil import parser
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # set the API key
 os.environ["_BARD_API_KEY"] = bard_api_key
@@ -16,14 +16,14 @@ class bardAnalyzer:
     # use Bard API to analyze the mail
     def analyze_the_mail(self):
         # list
+        q_res_list = []
         qualifiedResponse_list = []
         for index in range(len(self.unread_mail_df)):
             # get the body of the mail
             body = self.unread_mail_df['Body'].iloc[index]
 
             # set the prompt
-            prompt = 'Response should be one token only,that is just "Yes" or "No": Is this mail a zoom meeting request?\nMail: '+body + "Other instructions for you->\nDon't add any other information in the response.(Yes/No)\n\nGive the responese inside curly braces)"
-
+            prompt = "I am trying to analyze a mail for meeting request.\nHere I am giving you a body of a mail to analyze and tell me if it is a zoom meeting request?\nMail body:" + body + "\nI am taking response in just Yes or No.\nThe Yes or No should be inside curly barces. Example {Yes} or {No}"
             # call the API
             bard = Bard()
             qualifyResponse = bard.get_answer(prompt)['content']
@@ -31,10 +31,15 @@ class bardAnalyzer:
 
             # append the response to the list
             qualifiedResponse_list.append(qualifyResponse_token)
+            q_res_list.append(qualifyResponse)
 
         # add the response to the dataframe
         qualified_mails = self.unread_mail_df.copy()
         qualified_mails['Response'] = pd.Series(qualifiedResponse_list).tolist()
+        qualified_mails['Q_res'] = pd.Series(q_res_list).tolist()
+
+        #save
+        qualified_mails.to_csv('qfiles.csv')
 
         # filter the mails based on the response
         qualified_mails = qualified_mails[qualified_mails['Response'] == 'Yes']
@@ -92,12 +97,13 @@ class bardAnalyzer:
 
         return linkReqMails
     
-    def extract_mail_data(self,mail):
+    def extract_meeting_details(self,mail):
         # call the API
         bard = Bard()
 
-        # empty list
+        # empty list  
         topic_list = []
+        attendees_list = []
 
         for index in range(len(mail)):
             # topic of the meeting 
@@ -106,11 +112,19 @@ class bardAnalyzer:
             topic = bard.get_answer(topic_prompt)['content']
             topic = re.search(r'{(.*?)}', topic).group(1)
 
+            # get the attendees mail id
+            attendees = mail['Sender ID'].iloc[index]
+            attendees_email_address = re.search(r'[\w\.-]+@[\w\.-]+', attendees).group(0)
+
             # append the topic to the list
             topic_list.append(topic)
+            attendees_list.append(attendees_email_address)
+
+
 
         # add the topic to the dataframe
         mail['Topic'] = pd.Series(topic_list).tolist()
+        mail['Attendees'] = pd.Series(attendees_list).tolist()
 
         return mail
 

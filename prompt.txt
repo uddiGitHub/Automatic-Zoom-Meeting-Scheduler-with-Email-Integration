@@ -1,0 +1,1 @@
+"I am trying to analyze a mail for meeting request.\nHere I am giving you a body of a mail to analyze and tell me if it is a zoom meeting request?\nMail body:" + body + "\nI am taking response in just Yes or No.\nThe Yes or No should be inside curly barces. Example {Yes} or {No}"

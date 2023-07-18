@@ -8,6 +8,7 @@ from login_manager import login
 from mail_Reader import read
 # from mail_Analyzer import analyze
 from bardMail_analyzer import bardAnalyzer
+from meeting_Scheduler import schedule
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
@@ -32,6 +33,9 @@ if unread_mails_df is None:
     # close the driver
     mailDriver.close()
 else:
+    # close the driver
+    mailDriver.close()
+
     # #analyze the mails using keyword search
     # analyzeInstance = analyze(unread_mails_df)
     # qualified_mails = analyzeInstance.qualify_the_mail()
@@ -40,15 +44,15 @@ else:
     # linkReqMails.to_csv("linkReqMails.csv", index=False)
 
     # analyze the mails with Bard API
+    print("Analyzing the mails:...........")
     bardInstance = bardAnalyzer(unread_mails_df)
     qualified_mails = bardInstance.analyze_the_mail()
     linkReqMails = bardInstance.extract_date_and_time(qualified_mails)
+    print("Mails analyzed successfully")
     print(linkReqMails)
     linkReqMails.to_csv("linkReqMails.csv", index=False)
 
-    # close the driver
-    mailDriver.close()
-
+    print("Scheduling the meeting:...........")
     # zoom page url
     zoom_url = 'https://zoom.us/signin#/login'
 
@@ -62,6 +66,12 @@ else:
     zoomDriver = zoom_login.loginMethod()
 
     print("Login to zoom successful")
+
+    # schedule the meeting
+    scheduleInstance = schedule(zoomDriver)
+    invitation_df = scheduleInstance.schedule_zoom_meeting(linkReqMails)
+
+    invitation_df.to_csv("invitation.csv", index=False)
     # close the zoom driver
     zoomDriver.close()
 
