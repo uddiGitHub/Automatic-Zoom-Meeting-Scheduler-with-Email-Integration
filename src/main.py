@@ -36,44 +36,40 @@ else:
     # close the driver
     mailDriver.close()
 
-    # #analyze the mails using keyword search
-    # analyzeInstance = analyze(unread_mails_df)
-    # qualified_mails = analyzeInstance.qualify_the_mail()
-    # linkReqMails = analyzeInstance.extract_date_and_time(qualified_mails)
-    # # print(linkReqMails)
-    # linkReqMails.to_csv("linkReqMails.csv", index=False)
-
     # analyze the mails with Bard API
     print("Analyzing the mails:...........")
     bardInstance = bardAnalyzer(unread_mails_df)
     qualified_mails = bardInstance.analyze_the_mail()
-    linkReqMails = bardInstance.extract_date_and_time(qualified_mails)
-    print("Mails analyzed successfully")
-    print(linkReqMails)
-    linkReqMails.to_csv("linkReqMails.csv", index=False)
+    if qualified_mails.empty:
+        print("No qualified mails")
+    else:
+        linkReqMails = bardInstance.extract_date_and_time(qualified_mails)
+        print("Mails analyzed successfully")
+        print(linkReqMails)
+        linkReqMails.to_csv("linkReqMails.csv", index=False)
 
-    print("Scheduling the meeting:...........")
-    # zoom page url
-    zoom_url = 'https://zoom.us/signin#/login'
+        print("Scheduling the meeting:...........")
+        # zoom page url
+        zoom_url = 'https://zoom.us/signin#/login'
 
-    # define the xpath
-    usernameXpath = "//input[@id='email']"
-    passwordName = "password"
-    singinXpath = "//span[normalize-space()='Sign In']"
+        # define the xpath
+        usernameXpath = "//input[@id='email']"
+        passwordName = "password"
+        singinXpath = "//span[normalize-space()='Sign In']"
 
-    # login to zoom
-    zoom_login = login(emailId,zoom_password,zoom_url,usernameXpath,passwordName,singinXpath)
-    zoomDriver = zoom_login.loginMethod()
+        # login to zoom
+        zoom_login = login(emailId,zoom_password,zoom_url,usernameXpath,passwordName,singinXpath)
+        zoomDriver = zoom_login.loginMethod()
 
-    print("Login to zoom successful")
+        print("Login to zoom successful")
 
-    # schedule the meeting
-    scheduleInstance = schedule(zoomDriver)
-    invitation_df = scheduleInstance.schedule_zoom_meeting(linkReqMails)
+        # schedule the meeting
+        scheduleInstance = schedule(zoomDriver)
+        invitation_df = scheduleInstance.schedule_zoom_meeting(linkReqMails)
 
-    invitation_df.to_csv("invitation.csv", index=False)
-    # close the zoom driver
-    zoomDriver.close()
+        invitation_df.to_csv("invitation.csv", index=False)
+        # close the zoom driver
+        zoomDriver.close()
 
 
 

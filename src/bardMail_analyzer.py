@@ -23,12 +23,16 @@ class bardAnalyzer:
             body = self.unread_mail_df['Body'].iloc[index]
 
             # set the prompt
-            prompt = "I am trying to analyze a mail for meeting request.\nHere I am giving you a body of a mail to analyze and tell me if it is a zoom meeting request?\nMail body:" + body + "\nI am taking response in just Yes or No.\nThe Yes or No should be inside curly barces. Example {Yes} or {No}"
+            prompt = "I am trying to analyze a mail for meeting request.\nHere I am giving you a body of a mail to analyze and tell me if it is a zoom meeting request?\nMail body:" + body + "\nI am taking response in just 1 or 0.0 means No and 1 means Yes\nThe 1 or 0 should be inside curly barces. Example {1} or {0}"
             # call the API
             bard = Bard()
             qualifyResponse = bard.get_answer(prompt)['content']
             qualifyResponse_token = re.search(r'{(.*?)}', qualifyResponse).group(1)
-
+            # check if the response is Yes or No
+            for word in qualifyResponse_token.split():
+                if word == '1' or word == '0':
+                    qualifyResponse_token = word
+                    break
             # append the response to the list
             qualifiedResponse_list.append(qualifyResponse_token)
             q_res_list.append(qualifyResponse)
@@ -42,7 +46,7 @@ class bardAnalyzer:
         qualified_mails.to_csv('qfiles.csv')
 
         # filter the mails based on the response
-        qualified_mails = qualified_mails[qualified_mails['Response'] == 'Yes']
+        qualified_mails = qualified_mails[qualified_mails['Response'] == '1']
 
         return qualified_mails
     
@@ -89,7 +93,7 @@ class bardAnalyzer:
             duration_minute_list.append(minutes)
 
         # add the date and time and duration to the dataframe
-        linkReqMails = qualified_mails.drop('Body',axis=1)
+        linkReqMails = qualified_mails.copy()
         linkReqMails['Date'] = pd.Series(date_list).tolist()
         linkReqMails['Time'] = pd.Series(time_list).tolist()
         linkReqMails['Duration_Hours'] = pd.Series(duration_hour_list).tolist()
@@ -108,7 +112,8 @@ class bardAnalyzer:
         for index in range(len(mail)):
             # topic of the meeting 
             subject = mail['Subject'].iloc[index]
-            topic_prompt = 'Response should be one sentence only, no other explanation: just the topic of the meeting.\n' + subject + "\nDon't add any other information in the response.\nGive the responese inside curly braces)"
+            body = mail['Body'].iloc[index]
+            topic_prompt = 'Response should be one sentence only, no other explanation: just the topic for the meeting.\n' + subject + body + "\nDon't add any other information in the response.\nGive the responese inside curly braces)"
             topic = bard.get_answer(topic_prompt)['content']
             topic = re.search(r'{(.*?)}', topic).group(1)
 

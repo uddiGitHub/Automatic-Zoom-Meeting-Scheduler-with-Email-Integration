@@ -1,13 +1,27 @@
-Subject,Sender,Sender ID,Response,Q_res,Date,Time,Duration_Hours,Duration_Minutes
-Request for Zoom Meeting: Project Discussion,Uddipta Deka,<uddipta222000deka@gmail.com>,Yes,"**{Yes}**
+Subject,Sender,Sender ID,Body,Response,Q_res,Date,Time,Duration_Hours,Duration_Minutes
+Request for Zoom Meeting: Team Training,Uddipta Deka,<uddipta222000deka@gmail.com>,"Dear IOCL,
 
-The mail you provided clearly states that the sender is requesting a Zoom meeting to discuss an important project. The sender specifies the date, time, and duration of the meeting, and they also ask the recipient to let them know if the suggested time works for them. This is all very typical of a Zoom meeting request.
+I hope this email finds you in good health. I am writing to request a Zoom meeting to conduct a team training session on volleyball. As our team continues to grow, it is crucial that we enhance our skills and knowledge in this area to ensure consistent performance and productivity.
 
-Here are some of the key phrases in the mail that indicate that it is a Zoom meeting request:
+I suggest the following details for the Zoom meeting:
 
-* ""I would like to request a Zoom meeting""
-* ""The meeting will provide an opportunity to go over the project details, address any concerns, and ensure that we are aligned on the next steps""
-* ""I propose the following details for the Zoom meeting: Date: July 12, 2023 Time: 10:00 AM (GMT) Duration: 1 hour""
-* ""Please let me know if the suggested date and time work for you""
+Date: July 20, 2024
+Time: 2:00 PM (GMT)
+Duration: 1.5 hours
 
-I hope this helps! Let me know if you have any other questions.",2023-07-12,10:00 AM,1,0
+Please let me know if the proposed date and time are convenient for you. If not, I am open to alternative suggestions. Your participation in this training will greatly contribute to the development of our team, and I appreciate your support.
+
+Thank you for your attention to this matter. I look forward to your positive response.
+
+Warm regards,",1,"Sure, I can help you with that.
+
+The mail body you provided does contain a request for a Zoom meeting. The following are the keywords that indicate this:
+
+* ""Zoom meeting""
+* ""Date: July 20, 2024""
+* ""Time: 2:00 PM (GMT)""
+* ""Duration: 1.5 hours""
+
+These keywords suggest that the sender is requesting a Zoom meeting to conduct a team training session on volleyball on July 20, 2024 at 2:00 PM GMT. The meeting will last for 1.5 hours.
+
+Therefore, my response is {1}. The mail body you provided is a Zoom meeting request.",2024-07-20,2:00 PM,1,30
