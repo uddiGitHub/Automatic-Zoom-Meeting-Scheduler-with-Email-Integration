@@ -6,7 +6,6 @@ from credentials import emailId, gmail_password, zoom_password
 # import 
 from login_manager import login
 from mail_Reader import read
-# from mail_Analyzer import analyze
 from bardMail_analyzer import bardAnalyzer
 from meeting_Scheduler import schedule
 
@@ -43,10 +42,10 @@ else:
     if qualified_mails.empty:
         print("No qualified mails")
     else:
+        print("Getting the dates and time:...........")
         linkReqMails = bardInstance.extract_date_and_time(qualified_mails)
         print("Mails analyzed successfully")
         print(linkReqMails)
-        linkReqMails.to_csv("linkReqMails.csv", index=False)
 
         print("Scheduling the meeting:...........")
         # zoom page url
@@ -66,6 +65,9 @@ else:
         # schedule the meeting
         scheduleInstance = schedule(zoomDriver)
         invitation_df = scheduleInstance.schedule_zoom_meeting(linkReqMails)
+        print("Meeting scheduled successfully")
+        print(invitation_df)
+
 
         invitation_df.to_csv("invitation.csv", index=False)
         # close the zoom driver

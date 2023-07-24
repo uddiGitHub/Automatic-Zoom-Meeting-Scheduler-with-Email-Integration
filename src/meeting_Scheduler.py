@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import datetime
@@ -20,7 +21,7 @@ class schedule:
         # extract the required details from the mail from bard analyzer
         bardInstance = bardAnalyzer(linkReqMails)
         meeting_details = bardInstance.extract_meeting_details(linkReqMails)
-        print(meeting_details)
+        # print(meeting_details)
 
         for index in range(len(meeting_details)):
             # strat the process of scheduling the meeting
@@ -112,11 +113,13 @@ class schedule:
             if period == 'AM':
                 # self.driver.find_element(
                 #     By.XPATH, "(//dd[@id='select-item-start_time2-0'])[1]").click()
-                break
+                pg.press('enter')
             else:
                 # select PM
-                self.driver.find_element(
-                    By.XPATH, "(//dd[@id='select-item-start_time2-1'])[1]").click()
+                # self.driver.find_element(
+                #     By.XPATH, "(//dd[@id='select-item-start_time2-1'])[1]").click()
+                pg.press('down')
+                pg.press('enter')
 
             # set the time zone
             timezone_india = "(GMT+5:30) India"
@@ -129,21 +132,17 @@ class schedule:
             # set the attendees
             attendees_path = "//input[@placeholder='Enter user names or email addresses']"
             attendees = self.driver.find_element(By.XPATH, attendees_path)
-            attendees.click()
             attendees_name = meeting_details['Attendees'].iloc[index]
+            attendees.click()
             attendees.send_keys(attendees_name)
-            # pg.typewrite(str(attendees_name))
-            pg.press('enter')
+            pg.sleep(2)
             pg.press('enter')
 
             # save the meeting
-            save_path = "//div[@class='zm-sticky-fixed schedule-bar-sticky']//div//span[@class='zm-button__slot'][normalize-space()='Save']"
-            save = self.driver.find_element(By.XPATH, save_path)
-            save.click()
-
-            if WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//span[@class='dialog-footer']//span[@class='zm-button__slot'][normalize-space()='Save']"))):
-                save = self.driver.find_element(By.XPATH, "//span[@class='dialog-footer']//span[@class='zm-button__slot'][normalize-space()='Save']")
-                save.click()
+            save_path = "//div[@class='zm-sticky-fixed schedule-bar-sticky']//button[1]"
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, save_path))
+            ).click()
 
             # copy the meeting link as invitation
             WebDriverWait(self.driver, 100).until(
@@ -157,11 +156,10 @@ class schedule:
                     (By.XPATH, "//button[contains(@class, 'zm-button--primary') and contains(@class, 'zm-button--small') and contains(@class, 'zm-button') and span[contains(@class, 'zm-button__slot') and contains(., 'Copy Meeting Invitation')]]"))
             ).click()
             invitation = pyperclip.paste()
-            print(invitation)
             invitation_link.append(invitation)
+            self.driver.find_element(By.XPATH, "//div[@aria-labelledby='customTitle']//span[@class='zm-button__slot'][normalize-space()='Cancel']").click()
 
         # add the invitation link to the dataframe
-        meeting_details['Invitation Link'] = pd.Series(
-            invitation_link).tolist()
+        meeting_details['Invitation Link'] = pd.Series(invitation_link).tolist()
 
         return meeting_details

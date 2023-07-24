@@ -19,7 +19,7 @@ class login:
     def loginMethod(self):
         # create a new instance of chrome
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-
+        driver.maximize_window()
         # go to gmail web page 
         driver.get(self.url)
 
