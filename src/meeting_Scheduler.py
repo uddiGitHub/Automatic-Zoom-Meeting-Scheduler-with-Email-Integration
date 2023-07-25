@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import datetime
@@ -15,6 +14,7 @@ class schedule:
         self.driver = driver
 
     def schedule_zoom_meeting(self, linkReqMails):
+        wait = WebDriverWait(self.driver, 100)
         # list
         invitation_link = []
 
@@ -26,14 +26,14 @@ class schedule:
         for index in range(len(meeting_details)):
             # strat the process of scheduling the meeting
             scheduler_path = "//ul[@aria-label='meetings']//a[@id='btnScheduleMeeting']"
-            scheduler = WebDriverWait(self.driver, 10).until(
+            scheduler = wait.until(
                 EC.visibility_of_element_located((By.XPATH, scheduler_path))
             )
             scheduler.click()
 
             # define the topic of the meeting
             topic_path = "//input[@id='topic']"
-            topic = WebDriverWait(self.driver, 10).until(
+            topic = wait.until(
                 EC.visibility_of_element_located((By.XPATH, topic_path))
             )
             topic.send_keys(meeting_details['Topic'].iloc[index])
@@ -55,12 +55,12 @@ class schedule:
             self.driver.execute_script("arguments[0].scrollIntoView();", topic)
             calender.click()
             # select the month
-            month_sel = WebDriverWait(self.driver, 10).until(
+            month_sel = wait.until(
                 EC.visibility_of_element_located(
                     (By.CSS_SELECTOR, "div[role='application' i] span:nth-child(1)"))
             )
             cmonth = month_sel.text
-            year_sel = WebDriverWait(self.driver, 10).until(
+            year_sel = wait.until(
                 EC.visibility_of_element_located(
                     (By.CSS_SELECTOR, "div[role='application' i] span:nth-child(2)"))
             )
@@ -70,15 +70,15 @@ class schedule:
                 if cmonth == str(ex_month) and cyear == str(ex_year):
                     break
                 else:
-                    next = WebDriverWait(self.driver, 20).until(
+                    next = wait.until(
                         EC.visibility_of_element_located((By.XPATH, "//button[contains(@class, 'zm-date-picker__next-month-btn') and contains(@aria-label, 'Next Month')]"))
                     )
                     action = ActionChains(self.driver)
                     action.move_to_element(next).click().perform()
-                    cmonth = WebDriverWait(self.driver, 10).until(
+                    cmonth = wait.until(
                         EC.visibility_of_element_located((By.CSS_SELECTOR, "div[role='application' i] span:nth-child(1)"))
                     ).text
-                    cyear = WebDriverWait(self.driver, 10).until(
+                    cyear = wait.until(
                         EC.visibility_of_element_located((By.CSS_SELECTOR, "div[role='application' i] span:nth-child(2)"))
                     ).text
             # select the date
@@ -135,7 +135,7 @@ class schedule:
             attendees_name = meeting_details['Attendees'].iloc[index]
             attendees.click()
             attendees.send_keys(attendees_name)
-            pg.sleep(2)
+            pg.sleep(5)
             pg.press('enter')
 
             # save the meeting
@@ -145,13 +145,13 @@ class schedule:
             ).click()
 
             # copy the meeting link as invitation
-            WebDriverWait(self.driver, 100).until(
+            wait.until(
                 EC.visibility_of_element_located(
                     (By.XPATH, "//button[contains(@class, 'zm-button--plain') and contains(@class, 'zm-button--small') and contains(@class, 'zm-button') and span[contains(@class, 'zm-button__slot') and contains(., 'Copy Invitation')]]"))
             ).click()
 
             # copy to clipboard
-            WebDriverWait(self.driver, 10).until(
+            wait.until(
                 EC.visibility_of_element_located(
                     (By.XPATH, "//button[contains(@class, 'zm-button--primary') and contains(@class, 'zm-button--small') and contains(@class, 'zm-button') and span[contains(@class, 'zm-button__slot') and contains(., 'Copy Meeting Invitation')]]"))
             ).click()

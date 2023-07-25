@@ -23,8 +23,10 @@ class login:
         # go to gmail web page 
         driver.get(self.url)
 
+        wait = WebDriverWait(driver, 100)
+
         # input the credentials and login
-        email = WebDriverWait(driver, 10).until(
+        email = wait.until(
             EC.visibility_of_element_located((By.XPATH, self.emailXpath))
         )
         email.send_keys(self.emailId)
@@ -37,7 +39,7 @@ class login:
             # if the password field is not found, click on the next button
             driver.find_element(By.XPATH, self.enterXpath).click()
 
-        password = WebDriverWait(driver, 10).until(
+        password = wait.until(
             EC.visibility_of_element_located((By.NAME  , self.passName))
         )
         password.send_keys(self.password)

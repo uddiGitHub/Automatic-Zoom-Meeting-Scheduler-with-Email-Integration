@@ -8,17 +8,21 @@ class read:
         self.driver = driver
         
     def read_text(self):
+        wait = WebDriverWait(self.driver, 100)
         # define the paths of the web elements
         primary_mailbox_path = "//div[@id=':1s']"
         unread_mailsClassName = "zA.zE"
 
-        primary_mailbox = WebDriverWait(self.driver, 10).until(
+        primary_mailbox = wait.until(
             EC.visibility_of_element_located((By.XPATH, primary_mailbox_path))
         )
         primary_mailbox.click()
 
         # find all the emails
         unread_mails = self.driver.find_elements(By.CLASS_NAME,unread_mailsClassName)
+        # unread_mails = WebDriverWait(self.driver, 10).until(
+        #     EC.visibility_of_all_elements_located((By.CLASS_NAME, unread_mailsClassName))
+        # )
 
         # create a empty dataframe to store the unread mails
         unread_mail_df = pd.DataFrame(columns=['Subject','Sender','Sender ID','Body'])
@@ -28,7 +32,7 @@ class read:
                 #open the unread mails    
                 email.click()
 
-                subject = WebDriverWait(self.driver, 10).until(
+                subject = wait.until(
                     EC.visibility_of_element_located((By.CLASS_NAME, "hP"))
                 )
                 subject = subject.text

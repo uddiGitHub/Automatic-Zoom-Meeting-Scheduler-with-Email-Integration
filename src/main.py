@@ -8,6 +8,7 @@ from login_manager import login
 from mail_Reader import read
 from bardMail_analyzer import bardAnalyzer
 from meeting_Scheduler import schedule
+from response import compose
 
 # define the Xpath of the required elements of the web page
 emailXpath = "//input[@id='identifierId']"
@@ -59,7 +60,6 @@ else:
         # login to zoom
         zoom_login = login(emailId,zoom_password,zoom_url,usernameXpath,passwordName,singinXpath)
         zoomDriver = zoom_login.loginMethod()
-
         print("Login to zoom successful")
 
         # schedule the meeting
@@ -68,10 +68,18 @@ else:
         print("Meeting scheduled successfully")
         print(invitation_df)
 
-
-        invitation_df.to_csv("invitation.csv", index=False)
         # close the zoom driver
         zoomDriver.close()
+
+        # login to gmail
+        response_gmail_login = login(emailId,gmail_password,gmail_url,emailXpath,passName,enterXpath)
+        response_mailDriver = response_gmail_login.loginMethod()
+
+        # compose the mail
+        print("Composing the mail:...........")
+        composeInstance = compose(response_mailDriver)
+        composeInstance.compose_mail(invitation_df)
+        print("Mail sent successfully")
 
 
 
