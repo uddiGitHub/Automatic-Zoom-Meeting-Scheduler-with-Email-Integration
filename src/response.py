@@ -10,7 +10,7 @@ class compose:
         self.driver = driver
     
     def compose_mail(self,invitation_df):
-        wait = WebDriverWait(self.driver, 100)
+        wait = WebDriverWait(self.driver, 300)
         # iterate over invitation_df
         for index in range(len(invitation_df)):
             #click on compose button

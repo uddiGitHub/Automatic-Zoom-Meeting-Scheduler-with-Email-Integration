@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import datetime
-from bardMail_analyzer import bardAnalyzer
+from mail_analyzer import bardAnalyzer
 import pyautogui as pg
 import pyperclip
 import pandas as pd
@@ -14,7 +14,7 @@ class schedule:
         self.driver = driver
 
     def schedule_zoom_meeting(self, linkReqMails):
-        wait = WebDriverWait(self.driver, 100)
+        wait = WebDriverWait(self.driver, 300)
         # list
         invitation_link = []
 

@@ -6,7 +6,7 @@ from credentials import emailId, gmail_password, zoom_password
 # import 
 from login_manager import login
 from mail_Reader import read
-from bardMail_analyzer import bardAnalyzer
+from mail_analyzer import bardAnalyzer
 from meeting_Scheduler import schedule
 from response import compose
 

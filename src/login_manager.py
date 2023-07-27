@@ -23,7 +23,7 @@ class login:
         # go to gmail web page 
         driver.get(self.url)
 
-        wait = WebDriverWait(driver, 100)
+        wait = WebDriverWait(driver, 300)
 
         # input the credentials and login
         email = wait.until(

@@ -8,7 +8,7 @@ class read:
         self.driver = driver
         
     def read_text(self):
-        wait = WebDriverWait(self.driver, 100)
+        wait = WebDriverWait(self.driver, 300)
         # define the paths of the web elements
         primary_mailbox_path = "//div[@id=':1s']"
         unread_mailsClassName = "zA.zE"
