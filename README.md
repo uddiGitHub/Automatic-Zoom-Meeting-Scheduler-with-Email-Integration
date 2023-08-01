@@ -3,19 +3,19 @@ This is an advanced Robotic Process Automation (RPA) bot designed to seamlessly 
 
 ### Results
 Upon executing the [main.py](https://github.com/uddiGitHub/Automatic-Zoom-Meeting-Scheduler-with-Email-Integration/blob/main/src/main.py)  script with the appropriate credentials, the Robotic Process Automation (RPA) bot demonstrates remarkable proficiency in scheduling Zoom meetings and promptly dispatching the meeting links to attendees via email. Presented below is a representative output exemplifying the entire process.
-###### Authenticating Gmail and Retrieving Emails
+> **Authenticating Gmail and Retrieving Emails**
 
 
 https://github.com/uddiGitHub/Automatic-Zoom-Meeting-Scheduler-with-Email-Integration/assets/102317373/33425de0-2fe4-40c9-a1ca-9cc6cf6a70b1
 
 
-###### Logging into Zoom Platform and Scheduling Meeting
+> **Logging into Zoom Platform and Scheduling Meeting**
 
 
 https://github.com/uddiGitHub/Automatic-Zoom-Meeting-Scheduler-with-Email-Integration/assets/102317373/bbfa0e82-ad67-4c41-8d1f-51b91c840d2e
 
 
-###### Accessing Gmail Again and Sending the Meeting Link
+> **Accessing Gmail Again and Sending the Meeting Link**
 
 
 https://github.com/uddiGitHub/Automatic-Zoom-Meeting-Scheduler-with-Email-Integration/assets/102317373/b5d343a4-9790-495e-b48e-12a9f18bf90f
