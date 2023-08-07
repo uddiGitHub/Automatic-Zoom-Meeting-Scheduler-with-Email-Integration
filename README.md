@@ -26,7 +26,7 @@ https://github.com/uddiGitHub/Automatic-Zoom-Meeting-Scheduler-with-Email-Integr
 1. **Python 3.10.6 or greater:** To install Python, refer to the official Python website for the latest version. [Official website link](https://www.python.org/)
 2. **Selenium:** Install the Selenium library using the following command:<br> `pip install selenium`
 3. **Webdriver Manager:** Install the Webdriver Manager using the following command:<br> `pip install webdriver-manager`
-4. **Pandas:** Install the Pandas library using the following command:<br> `print(pip install pandas)`
+4. **Pandas:** Install the Pandas library using the following command:<br> `pip install pandas`
 5. **Bardapi:** Install the Bardapi library using the following command:<br> `pip install bardapi`
 6. **PyAutoGUI:** Install the PyAutoGUI library using the following command:<br> `pip install pyautogui`
 7. **Pyperclip:** Install the Pyperclip library using the following command:<br> `pip install pyperclip`
